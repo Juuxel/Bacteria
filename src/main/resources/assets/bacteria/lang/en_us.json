@@ -1,0 +1,6 @@
+{
+  "block.bacteria.colony": "Bacterium Colony",
+  "chat.bacteria.invalid_block": "Place an edible block on the colony.",
+  "chat.bacteria.jammed": "Jammed all bacterium colonies.",
+  "chat.bacteria.unjammed": "Unjammed all bacterium colonies."
+}

@@ -1,0 +1,14 @@
+{
+  "id": "bacteria",
+  "name": "Bacteria",
+  "description": "Bacteria.",
+  "version": "0.1.0",
+  "side": "universal",
+  "initializer": "juuxel.bacteria.Bacteria",
+  "requires": {
+    "fabric": "*"
+  },
+  "mixins": {
+  },
+  "languageAdapter": "net.fabricmc.language.kotlin.KotlinLanguageAdapter"
+}
