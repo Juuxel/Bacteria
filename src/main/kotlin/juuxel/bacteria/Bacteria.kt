@@ -1,6 +1,7 @@
 package juuxel.bacteria
 
 import juuxel.bacteria.blocks.ColonyBlock
+import juuxel.bacteria.items.BacteriumBunchItem
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.registry.CommandRegistry
 import net.fabricmc.fabric.api.tag.TagRegistry
@@ -19,6 +20,7 @@ object Bacteria : ModInitializer {
     lateinit var colonyBlock: ColonyBlock private set
     lateinit var colonyBEType: BlockEntityType<ColonyBlock.Entity> private set
     lateinit var inedibleTag: Tag<Block> private set
+    lateinit var bacteriumBunch: Item private set
     const val jamColoniesGameRule = "bacteria_jamColonies"
 
     override fun onInitialize() {
@@ -49,5 +51,7 @@ object Bacteria : ModInitializer {
                 })
             )
         }
+
+        bacteriumBunch = Registry.register(Registry.ITEM, Identifier("bacteria", "bacterium_bunch"), BacteriumBunchItem())
     }
 }

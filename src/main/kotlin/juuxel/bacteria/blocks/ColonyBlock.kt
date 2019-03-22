@@ -1,10 +1,12 @@
 package juuxel.bacteria.blocks
 
 import juuxel.bacteria.Bacteria
+import juuxel.bacteria.items.BacteriumBunchItem
 import net.fabricmc.fabric.api.block.FabricBlockSettings
 import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
@@ -40,6 +42,29 @@ class ColonyBlock : BlockWithEntity(FabricBlockSettings.copy(Blocks.SPONGE).drop
         }
 
         return true
+    }
+
+    override fun afterBreak(
+        world: World,
+        player: PlayerEntity?,
+        pos: BlockPos,
+        state: BlockState?,
+        be: BlockEntity?,
+        stack: ItemStack?
+    ) {
+        super.afterBreak(world, player, pos, state, be, stack)
+        Block.dropStack(
+            world,
+            pos,
+            ItemStack(Bacteria.bacteriumBunch, (0..3).random()).apply {
+                getOrCreateTag().put(
+                    "BacteriumData",
+                    BacteriumBunchItem.Data(
+                        // TODO: Bacterium data and evolution
+                    ).toNbt()
+                )
+            }
+        )
     }
 
     companion object {

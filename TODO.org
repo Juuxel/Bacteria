@@ -1,0 +1,6 @@
+* TODO Bacteria 0.1.0 [0/3]
+- [ ] Machines
+  - [ ] Humidifier
+  - [ ] Bacterial Analyzer
+- [ ] Make Data.hunger affect the player
+- [ ] Evolution
