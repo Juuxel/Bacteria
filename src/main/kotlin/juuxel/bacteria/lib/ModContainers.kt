@@ -1,11 +1,9 @@
 package juuxel.bacteria.lib
 
 import juuxel.bacteria.block.entity.HumidifierEntity
-import juuxel.bacteria.container.HumidifierContainer
 import juuxel.bacteria.container.gui.HumidifierScreen
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry
-import net.minecraft.block.entity.HopperBlockEntity
 import net.minecraft.util.Identifier
 
 object ModContainers {
@@ -14,10 +12,10 @@ object ModContainers {
     fun init() {
         ContainerProviderRegistry.INSTANCE.registerFactory(humidifier) { syncId, id, player, buf ->
             val pos = buf.readBlockPos()
-            val inventory = HopperBlockEntity.getInventoryAt(player.world, pos)
+            val entity = player.world.getBlockEntity(pos)
 
-            if (inventory != null)
-                HumidifierContainer(syncId, inventory, player.inventory)
+            if (entity is HumidifierEntity)
+                entity.createMenu(syncId, player.inventory, player)
             else
                 null
         }
@@ -29,7 +27,7 @@ object ModContainers {
             val entity = player.world.getBlockEntity(pos)
 
             if (entity is HumidifierEntity)
-                HumidifierScreen(syncId, entity, player)
+                HumidifierScreen(entity.createMenu(syncId, player.inventory, player), player)
             else
                 null
         }

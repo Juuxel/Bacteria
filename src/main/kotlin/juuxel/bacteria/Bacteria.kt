@@ -18,12 +18,14 @@ object Bacteria : ModInitializer {
         ModTags.init()
         ModContainers.init()
         ModRecipes.init()
+        ModPackets.init()
         GameRules.getKeys()[jamColoniesGameRule] = GameRules.Key("false", GameRules.Type.BOOLEAN)
     }
 
     object Client : ClientModInitializer {
         override fun onInitializeClient() {
             ModContainers.initClient()
+            ModPackets.initClient()
         }
     }
 }

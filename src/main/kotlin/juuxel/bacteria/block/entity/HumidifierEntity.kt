@@ -15,9 +15,12 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.recipe.RecipeFinder
 import net.minecraft.recipe.RecipeInputProvider
 import net.minecraft.util.Tickable
+import net.minecraft.util.math.MathHelper
 
 class HumidifierEntity : BlockEntity(HumidifierBlock.blockEntityType), ContainerProvider, RecipeInputProvider, Tickable {
     private val items = SimpleItemComponent(2)
+    var progress = 0
+        private set
 
     init {
         items.listen(this::markDirty)
@@ -26,14 +29,16 @@ class HumidifierEntity : BlockEntity(HumidifierBlock.blockEntityType), Container
     override fun fromTag(tag: CompoundTag) {
         super.fromTag(tag)
         items.fromTag(tag.getTag("Items"))
+        progress = MathHelper.clamp(tag.getInt("Progress"), 0, MAX_PROGRESS)
     }
 
     override fun toTag(tag: CompoundTag) = super.toTag(tag).apply {
         put("Items", items.toTag())
+        putInt("Progress", progress)
     }
 
     override fun createMenu(syncId: Int, playerInv: PlayerInventory, player: PlayerEntity) =
-        HumidifierContainer(syncId, items, playerInv)
+        HumidifierContainer(syncId, items, playerInv, pos)
 
     fun getInventory(): SidedInventory = SidedItemView(items)
 
@@ -45,15 +50,27 @@ class HumidifierEntity : BlockEntity(HumidifierBlock.blockEntityType), Container
         if (world.isClient) return
 
         if (!items[0].isEmpty) {
-            val recipe = world.recipeManager[ModRecipes.humidifying, items, world]
-            recipe.ifPresent {
-                if (world.random.nextInt(16) == 0) {
+            val optionalRecipe = world.recipeManager[ModRecipes.humidifying, items, world]
+            if (optionalRecipe.isPresent) {
+                val recipe = optionalRecipe.get()
+
+                if (progress < MAX_PROGRESS) progress++
+                if (progress >= MAX_PROGRESS) {
                     if (items[1].amount < 64) { // a not very fancy space check, since we know the output
                         items[0].subtractAmount(1)
-                        items.insert(1, it.craft(items), ActionType.PERFORM)
+                        items.insert(1, recipe.craft(items), ActionType.PERFORM)
+                        progress = 0
                     }
                 }
+            } else {
+                progress = 0
             }
+        } else {
+            progress = 0
         }
+    }
+
+    companion object {
+        const val MAX_PROGRESS = 200
     }
 }

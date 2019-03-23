@@ -11,13 +11,12 @@ import net.minecraft.text.TranslatableTextComponent
 import net.minecraft.util.Identifier
 
 open class BacteriaContainerScreen<C : Container>(
-    syncId: Int, inventory: Inventory, player: PlayerEntity, id: String,
-    fn: (Int, Inventory, PlayerInventory) -> C) :
-    ContainerScreen<C>(
-        fn(syncId, inventory, player.inventory),
-        player.inventory,
-        TranslatableTextComponent("container.bacteria.$id")
-    ) {
+    container: C, player: PlayerEntity, id: String
+) : ContainerScreen<C>(
+    container,
+    player.inventory,
+    TranslatableTextComponent("container.bacteria.$id")
+) {
     private val background = Identifier("bacteria", "textures/gui/$id.png")
 
     override fun drawBackground(v: Float, i: Int, i1: Int) {
