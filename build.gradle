@@ -14,6 +14,17 @@ repositories {
         name = 'Cotton'
         url = 'http://server.bbkr.space:8081/artifactory/libs-snapshot'
     }
+
+    maven {
+        name = 'Cotton (releases)'
+        url = 'http://server.bbkr.space:8081/artifactory/libs-release'
+    }
+
+    mavenCentral()
+}
+
+configurations {
+    jsonFactory
 }
 
 minecraft {
@@ -30,4 +41,17 @@ dependencies {
 //    modCompile "io.github.cottonmc:cotton-ecs:1.0.0+19w11b-SNAPSHOT" // TODO Add this later, won't need it right now
     modCompile "io.github.prospector.silk:SilkAPI:1.2.3-38"
     implementation "net.fabricmc:fabric-language-kotlin:1.3.21-SNAPSHOT"
+
+    jsonFactory "io.github.cottonmc:json-factory:0.3.2"
+}
+
+task('jsonFactory') {
+    doLast {
+        ant.java(
+                classname: 'io.github.cottonmc.jsonfactory.main.MainKt',
+                classpath: configurations.jsonFactory.asPath,
+                fork: true,
+                spawn: true
+        )
+    }
 }

@@ -14,8 +14,12 @@ class HumidifierContainer(syncId: Int, private val inv: Inventory, playerInv: Pl
     private val world = playerInv.player.world
 
     init {
-        // The single slot
-        addSlot(Slot(inv, 0, 80, 35))
+        // The input slot
+        addSlot(Slot(inv, 0, 60, 35))
+        // The output slot
+        addSlot(object : Slot(inv, 1, 110, 35) {
+            override fun canInsert(stack: ItemStack) = false
+        })
 
         // Player inventory
         for (row in 0..2) {

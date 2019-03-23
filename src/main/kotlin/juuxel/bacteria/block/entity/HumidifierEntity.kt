@@ -17,7 +17,7 @@ import net.minecraft.recipe.RecipeInputProvider
 import net.minecraft.util.Tickable
 
 class HumidifierEntity : BlockEntity(HumidifierBlock.blockEntityType), ContainerProvider, RecipeInputProvider, Tickable {
-    private val items = SimpleItemComponent(1, 1)
+    private val items = SimpleItemComponent(2)
 
     init {
         items.listen(this::markDirty)
@@ -48,8 +48,10 @@ class HumidifierEntity : BlockEntity(HumidifierBlock.blockEntityType), Container
             val recipe = world.recipeManager[ModRecipes.humidifying, items, world]
             recipe.ifPresent {
                 if (world.random.nextInt(16) == 0) {
-                    items[0].subtractAmount(1)
-                    items.insert(it.craft(items), ActionType.PERFORM)
+                    if (items[1].amount < 64) { // a not very fancy space check, since we know the output
+                        items[0].subtractAmount(1)
+                        items.insert(1, it.craft(items), ActionType.PERFORM)
+                    }
                 }
             }
         }

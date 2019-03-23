@@ -1,5 +1,6 @@
 package juuxel.bacteria.container.gui
 
+import juuxel.bacteria.block.entity.HumidifierEntity
 import juuxel.bacteria.container.HumidifierContainer
 import juuxel.bacteria.lib.ModContainers
 import net.minecraft.client.gui.ingame.RecipeBookProvider
@@ -11,10 +12,10 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.Inventory
 import net.minecraft.util.Identifier
 
-class HumidifierScreen(syncId: Int, inventory: Inventory, player: PlayerEntity) :
+class HumidifierScreen(syncId: Int, private val entity: HumidifierEntity, player: PlayerEntity) :
     BacteriaContainerScreen<HumidifierContainer>(
         syncId,
-        inventory,
+        entity.getInventory(),
         player,
         ModContainers.humidifier.path,
         ::HumidifierContainer
