@@ -1,7 +1,7 @@
 package juuxel.bacteria.recipe
 
 import com.google.gson.JsonObject
-import juuxel.bacteria.items.BacteriumBunchItem
+import juuxel.bacteria.item.BacteriumBunchItem
 import juuxel.bacteria.lib.ModItems
 import juuxel.bacteria.lib.ModRecipes
 import juuxel.bacteria.util.ModContent

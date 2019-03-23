@@ -1,6 +1,7 @@
-package juuxel.bacteria.blocks
+package juuxel.bacteria.block.entity
 
 import juuxel.bacteria.Bacteria
+import juuxel.bacteria.block.ColonyBlock
 import juuxel.bacteria.lib.ModBlocks
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -13,7 +14,7 @@ import net.minecraft.util.Tickable
 import net.minecraft.util.math.Direction
 import net.minecraft.util.registry.Registry
 
-class ColonyBlockEntity : BlockEntity(ColonyBlock.blockEntityType), Tickable {
+class ColonyEntity : BlockEntity(ColonyBlock.blockEntityType), Tickable {
     internal var target: Block? = null
     private var age = 0
 
@@ -35,7 +36,7 @@ class ColonyBlockEntity : BlockEntity(ColonyBlock.blockEntityType), Tickable {
             val state = world.getBlockState(offsetPos)
             if (world.random.nextInt(16) == 0 && matchesTarget(state)) {
                 world.setBlockState(offsetPos, ModBlocks.colony.defaultState)
-                (world.getBlockEntity(offsetPos) as? ColonyBlockEntity)?.let {
+                (world.getBlockEntity(offsetPos) as? ColonyEntity)?.let {
                     it.target = target
 
                     /*// Mutation

@@ -1,4 +1,4 @@
-package juuxel.bacteria.blocks
+package juuxel.bacteria.block
 
 import juuxel.bacteria.util.ModBlock
 import net.minecraft.block.Block

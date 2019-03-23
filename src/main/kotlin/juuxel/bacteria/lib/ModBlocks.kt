@@ -1,7 +1,7 @@
 package juuxel.bacteria.lib
 
-import juuxel.bacteria.blocks.ColonyBlock
-import juuxel.bacteria.blocks.HumidifierBlock
+import juuxel.bacteria.block.ColonyBlock
+import juuxel.bacteria.block.HumidifierBlock
 
 object ModBlocks : ModRegistry() {
     lateinit var colony: ColonyBlock private set

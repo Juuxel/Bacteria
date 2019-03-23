@@ -1,6 +1,6 @@
 package juuxel.bacteria.lib
 
-import juuxel.bacteria.items.BacteriumBunchItem
+import juuxel.bacteria.item.BacteriumBunchItem
 import net.minecraft.item.Item
 import net.minecraft.util.registry.Registry
 

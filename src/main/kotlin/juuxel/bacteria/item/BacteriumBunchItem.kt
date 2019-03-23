@@ -1,4 +1,4 @@
-package juuxel.bacteria.items
+package juuxel.bacteria.item
 
 import juuxel.bacteria.util.ModContent
 import net.fabricmc.api.EnvType

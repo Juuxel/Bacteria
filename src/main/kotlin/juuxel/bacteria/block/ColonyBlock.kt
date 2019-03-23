@@ -1,6 +1,7 @@
-package juuxel.bacteria.blocks
+package juuxel.bacteria.block
 
-import juuxel.bacteria.items.BacteriumBunchItem
+import juuxel.bacteria.block.entity.ColonyEntity
+import juuxel.bacteria.item.BacteriumBunchItem
 import juuxel.bacteria.lib.ModItems
 import juuxel.bacteria.lib.ModTags
 import net.fabricmc.fabric.api.block.FabricBlockSettings
@@ -30,7 +31,7 @@ class ColonyBlock : BBlockWithEntity(FabricBlockSettings.copy(Blocks.SPONGE).dro
         val upState = world.getBlockState(pos.up())
 
         if (isValidTargetBlock(upState)) {
-            (world.getBlockEntity(pos) as? ColonyBlockEntity)?.let { entity ->
+            (world.getBlockEntity(pos) as? ColonyEntity)?.let { entity ->
                 entity.target = upState.block
             }
             world.playSound(player, pos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1f, 1f)
@@ -66,7 +67,7 @@ class ColonyBlock : BBlockWithEntity(FabricBlockSettings.copy(Blocks.SPONGE).dro
     }
 
     companion object {
-        val blockEntityType = BlockEntityType(::ColonyBlockEntity, null)
+        val blockEntityType = BlockEntityType(::ColonyEntity, null)
 
         private fun isValidTargetBlock(state: BlockState) =
             !state.isAir && !state.block.matches(ModTags.inedibleTag)
