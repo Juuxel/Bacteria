@@ -1,5 +1,6 @@
 package juuxel.bacteria.items
 
+import juuxel.bacteria.util.ModContent
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.item.TooltipContext
@@ -25,7 +26,9 @@ class BacteriumBunchItem : Item(
             .eatenFast()
             .build()
     ).itemGroup(ItemGroup.FOOD)
-) {
+), ModContent<Item> {
+    override val name = "bacterium_bunch"
+
     override fun onItemFinishedUsing(
         stack: ItemStack,
         world: World,

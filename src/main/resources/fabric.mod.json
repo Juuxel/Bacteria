@@ -4,7 +4,7 @@
   "description": "Bacteria.",
   "version": "0.1.0",
   "side": "universal",
-  "initializer": "juuxel.bacteria.Bacteria",
+  "initializers": ["juuxel.bacteria.Bacteria", "juuxel.bacteria.Bacteria$Client"],
   "requires": {
     "fabric": "*"
   },
