@@ -16,6 +16,12 @@ open class BacteriaContainerScreen<C : Container>(
 ) {
     private val background = Identifier("bacteria", "textures/gui/$id.png")
 
+    override fun render(i1: Int, i2: Int, f: Float) {
+        drawBackground()
+        super.render(i1, i2, f)
+        drawMouseoverTooltip(i1, i2)
+    }
+
     override fun drawBackground(v: Float, i: Int, i1: Int) {
         GlStateManager.color4f(1f, 1f, 1f, 1f)
         client?.textureManager?.bindTexture(background)

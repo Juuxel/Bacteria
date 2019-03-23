@@ -15,12 +15,6 @@ class HumidifierScreen(container: HumidifierContainer, player: PlayerEntity) :
     ) {
     private var progress = 0
 
-    override fun render(i1: Int, i2: Int, f: Float) {
-        drawBackground()
-        super.render(i1, i2, f)
-        drawMouseoverTooltip(i1, i2)
-    }
-
     override fun drawForeground(int_1: Int, int_2: Int) {
         super.drawForeground(int_1, int_2)
         incProgress()
