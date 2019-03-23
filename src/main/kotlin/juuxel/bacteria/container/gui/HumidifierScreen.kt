@@ -4,12 +4,7 @@ import juuxel.bacteria.block.entity.HumidifierEntity
 import juuxel.bacteria.container.HumidifierContainer
 import juuxel.bacteria.lib.Colors
 import juuxel.bacteria.lib.ModContainers
-import juuxel.bacteria.lib.ModPackets
-import net.fabricmc.fabric.api.network.ClientSidePacketRegistry
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.inventory.Inventory
-import net.minecraft.util.SystemUtil
-import net.minecraft.util.math.BlockPos
 import kotlin.math.ceil
 
 class HumidifierScreen(container: HumidifierContainer, player: PlayerEntity) :
@@ -24,20 +19,21 @@ class HumidifierScreen(container: HumidifierContainer, player: PlayerEntity) :
         drawBackground()
         super.render(i1, i2, f)
         drawMouseoverTooltip(i1, i2)
-
-        if (System.currentTimeMillis() % 100L == 0L)
-            ClientSidePacketRegistry.INSTANCE.sendToServer(ModPackets.createRequestHumidifierProgress(container.pos))
     }
 
     override fun drawForeground(int_1: Int, int_2: Int) {
         super.drawForeground(int_1, int_2)
+        incProgress()
         val ratio = 66f / HumidifierEntity.MAX_PROGRESS.toFloat()
-        drawRect(58, 55, 58 + 68, 56, Colors.BLUE)
-        drawRect(58, 60, 58 + 68, 61, Colors.BLUE)
-        drawRect(59, 56, 59 + ceil(ratio * progress).toInt(), 60, Colors.BLUE)
+        drawRect(59, 55, 58 + 67, 56, Colors.LIGHT_BLUE)
+        drawRect(59, 60, 58 + 67, 61, Colors.BLUE)
+        drawGradientRect(59, 56, 59 + ceil(ratio * progress).toInt(), 60, Colors.LIGHT_BLUE, Colors.BLUE)
     }
 
-    fun updateProgress(progress: Int) {
-        this.progress = progress
+    private fun incProgress() {
+        progress++
+
+        if (progress >= HumidifierEntity.MAX_PROGRESS)
+            progress = 0
     }
 }
