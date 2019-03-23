@@ -59,7 +59,7 @@ class ColonyBlock : BBlockWithEntity(FabricBlockSettings.copy(Blocks.SPONGE).dro
                     "BacteriumData",
                     BacteriumBunchItem.Data(
                         // TODO: Bacterium data and evolution
-                    ).toNbt()
+                    ).toTag()
                 )
             }
         )

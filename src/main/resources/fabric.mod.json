@@ -9,6 +9,7 @@
     "fabric": "*"
   },
   "mixins": {
+    "client": "mixins.bacteria.client.json"
   },
   "languageAdapter": "net.fabricmc.language.kotlin.KotlinLanguageAdapter"
 }

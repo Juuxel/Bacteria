@@ -17,6 +17,7 @@ object Bacteria : ModInitializer {
         ModItems.init()
         ModTags.init()
         ModContainers.init()
+        ModRecipes.init()
         GameRules.getKeys()[jamColoniesGameRule] = GameRules.Key("false", GameRules.Type.BOOLEAN)
     }
 

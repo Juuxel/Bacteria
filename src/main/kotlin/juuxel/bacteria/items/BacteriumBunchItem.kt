@@ -37,7 +37,7 @@ class BacteriumBunchItem : Item(
         if (world.isClient) return@apply
 
         storeDataInStack(stack)
-        stack.tag?.getCompound("BacteriumData")?.let(Data.Companion::fromNbt)?.let {
+        stack.tag?.getCompound("BacteriumData")?.let(Data.Companion::fromTag)?.let {
             if (it.type.effects.isNotEmpty()) {
                 entity.addPotionEffect(
                     StatusEffectInstance(
@@ -52,7 +52,7 @@ class BacteriumBunchItem : Item(
     private fun storeDataInStack(stack: ItemStack, data: Data = Data.default) {
         stack.getOrCreateTag().let { tag ->
             if (!tag.containsKey("BacteriumData")) {
-                tag.put("BacteriumData", data.toNbt())
+                tag.put("BacteriumData", data.toTag())
             }
         }
     }
@@ -68,13 +68,13 @@ class BacteriumBunchItem : Item(
         list.add(
             StringTextComponent(
                 stack.tag?.getCompound("BacteriumData")
-                    ?.let(Data.Companion::fromNbt)?.type?.name ?: ""
+                    ?.let(Data.Companion::fromTag)?.type?.name ?: ""
             )
         )
     }
 
     data class Data(val lifetime: Double = 1.0, val hunger: Double = 1.0, val type: Type = Type.Harmful) {
-        fun toNbt(): CompoundTag =
+        fun toTag(): CompoundTag =
             CompoundTag().apply {
                 putDouble("Lifetime", lifetime)
                 putDouble("Hunger", hunger)
@@ -84,7 +84,7 @@ class BacteriumBunchItem : Item(
         companion object {
             val default = Data()
 
-            fun fromNbt(tag: CompoundTag): Data {
+            fun fromTag(tag: CompoundTag): Data {
                 val lifetime =
                     if (tag.containsKey("Lifetime")) tag.getDouble("Lifetime")
                     else default.lifetime

@@ -1,0 +1,6 @@
+{
+  "type": "bacteria:humidifying",
+  "ingredient": {
+    "item": "minecraft:bread"
+  }
+}

@@ -1,7 +1,7 @@
 package juuxel.bacteria.lib
 
-import juuxel.bacteria.container.SingleSlotContainer
-import juuxel.bacteria.container.gui.SingleSlotContainerScreen
+import juuxel.bacteria.container.HumidifierContainer
+import juuxel.bacteria.container.gui.HumidifierScreen
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry
 import net.minecraft.block.entity.HopperBlockEntity
@@ -16,7 +16,7 @@ object ModContainers {
             val inventory = HopperBlockEntity.getInventoryAt(player.world, pos)
 
             if (inventory != null)
-                SingleSlotContainer(syncId, inventory, player.inventory)
+                HumidifierContainer(syncId, inventory, player.inventory)
             else
                 null
         }
@@ -28,7 +28,7 @@ object ModContainers {
             val inventory = HopperBlockEntity.getInventoryAt(player.world, pos)
 
             if (inventory != null)
-                SingleSlotContainerScreen(syncId, inventory, player, humidifier.path)
+                HumidifierScreen(syncId, inventory, player)
             else
                 null
         }
