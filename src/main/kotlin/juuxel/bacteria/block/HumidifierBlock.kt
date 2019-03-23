@@ -4,16 +4,18 @@ import juuxel.bacteria.block.entity.HumidifierEntity
 import juuxel.bacteria.lib.ModContainers
 import net.fabricmc.fabric.api.block.FabricBlockSettings
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.block.InventoryProvider
+import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntityType
+import net.minecraft.entity.VerticalEntityPosition
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.shape.VoxelShape
+import net.minecraft.util.shape.VoxelShapes
+import net.minecraft.world.BlockView
 import net.minecraft.world.IWorld
 import net.minecraft.world.World
 
@@ -32,10 +34,19 @@ class HumidifierBlock : BBlockWithEntity(FabricBlockSettings.copy(Blocks.BLAST_F
         return true
     }
 
+    override fun getOutlineShape(state: BlockState?, view: BlockView?, pos: BlockPos?, vep: VerticalEntityPosition?): VoxelShape = outlineShape
+    override fun getRenderLayer() = BlockRenderLayer.TRANSLUCENT
+
     override fun getInventory(state: BlockState, world: IWorld, pos: BlockPos) =
         (world.getBlockEntity(pos) as? HumidifierEntity)?.getInventory()
 
     companion object {
         val blockEntityType = BlockEntityType(::HumidifierEntity, null)
+        val outlineShape: VoxelShape =
+            VoxelShapes.union(
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
+                Block.createCuboidShape(0.0, 10.0, 0.0, 16.0, 12.0, 16.0),
+                Block.createCuboidShape(2.0, 4.0, 2.0, 14.0, 10.0, 14.0)
+            )
     }
 }
