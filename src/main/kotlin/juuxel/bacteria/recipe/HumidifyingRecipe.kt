@@ -22,7 +22,9 @@ class HumidifyingRecipe(private val input: Ingredient) : Recipe<Inventory>, ModC
         getOrCreateTag().put("BacteriumData", BacteriumBunchItem.Data.default.toTag())
     }
 
-    override fun craft(inv: Inventory) = output.copy()
+    override fun craft(inv: Inventory) = ItemStack(ModItems.bacteriumBunch).apply {
+        getOrCreateTag().put("BacteriumData", BacteriumBunchItem.Data(type = BacteriumBunchItem.Type.values().random()).toTag())
+    }
     override fun getId() = recipeId
     override fun getType() = ModRecipes.humidifying
     override fun fits(p0: Int, p1: Int) = true

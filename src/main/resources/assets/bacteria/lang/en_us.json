@@ -1,7 +1,14 @@
 {
   "block.bacteria.colony": "Bacterium Colony",
+  "block.bacteria.humidifier": "Humidifier",
+  "block.bacteria.microscope": "Microscope",
   "chat.bacteria.invalid_block": "Place an edible block on the colony.",
   "chat.bacteria.jammed": "Jammed all bacterium colonies.",
   "chat.bacteria.unjammed": "Unjammed all bacterium colonies.",
-  "item.bacteria.bacterium_bunch": "Bunch of Bacteria"
+  "container.bacteria.humidifier": "Humidifier",
+  "container.bacteria.microscope": "Microscope",
+  "item.bacteria.bacterium_bunch": "Bunch of Bacteria",
+  "item.bacteria.bacterium_bunch.harmful": "Harmful",
+  "item.bacteria.bacterium_bunch.neutral": "Neutral",
+  "item.bacteria.bacterium_bunch.helpful": "Helpful"
 }

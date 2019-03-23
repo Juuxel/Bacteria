@@ -44,9 +44,9 @@ class HumidifierBlock : BBlockWithEntity(FabricBlockSettings.copy(Blocks.BLAST_F
         val blockEntityType = BlockEntityType(::HumidifierEntity, null)
         val outlineShape: VoxelShape =
             VoxelShapes.union(
-                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
-                Block.createCuboidShape(0.0, 10.0, 0.0, 16.0, 12.0, 16.0),
-                Block.createCuboidShape(2.0, 4.0, 2.0, 14.0, 10.0, 14.0)
+                Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
+                Block.createCuboidShape(0.0, 14.0, 0.0, 16.0, 16.0, 16.0),
+                Block.createCuboidShape(2.0, 2.0, 2.0, 14.0, 14.0, 14.0)
             )
     }
 }

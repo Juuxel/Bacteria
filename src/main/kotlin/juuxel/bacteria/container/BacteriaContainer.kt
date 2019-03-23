@@ -7,8 +7,11 @@ import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
 
-abstract class BacteriaContainer(syncId: Int, private val inventory: Inventory, playerInv: PlayerInventory) : Container(null, syncId) {
+abstract class BacteriaContainer(syncId: Int, private val inventory: Inventory, playerInv: PlayerInventory, slots: List<Slot>) : Container(null, syncId) {
     init {
+        for (slot in slots)
+            addSlot(slot)
+
         for (row in 0..2) {
             for (col in 0..8) {
                 addSlot(Slot(playerInv, col + row * 9 + 9, 8 + col * 18, 84 + row * 18))

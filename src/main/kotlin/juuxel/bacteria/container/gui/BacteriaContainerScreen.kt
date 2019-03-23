@@ -1,12 +1,9 @@
 package juuxel.bacteria.container.gui
 
 import com.mojang.blaze3d.platform.GlStateManager
-import juuxel.bacteria.container.SingleSlotContainer
 import net.minecraft.client.gui.ContainerScreen
 import net.minecraft.container.Container
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.inventory.Inventory
 import net.minecraft.text.TranslatableTextComponent
 import net.minecraft.util.Identifier
 

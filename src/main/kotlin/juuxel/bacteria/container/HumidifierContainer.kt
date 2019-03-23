@@ -12,7 +12,7 @@ import net.minecraft.recipe.RecipeInputProvider
 import net.minecraft.util.math.BlockPos
 
 class HumidifierContainer(
-    syncId: Int, private val inv: Inventory, playerInv: PlayerInventory, val pos: BlockPos
+    syncId: Int, private val inv: Inventory, playerInv: PlayerInventory
 ) : CraftingContainer<Inventory>(null, syncId) {
     private val world = playerInv.player.world
 

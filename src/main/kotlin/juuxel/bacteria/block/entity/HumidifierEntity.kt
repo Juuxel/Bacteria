@@ -38,7 +38,7 @@ class HumidifierEntity : BlockEntity(HumidifierBlock.blockEntityType), Container
     }
 
     override fun createMenu(syncId: Int, playerInv: PlayerInventory, player: PlayerEntity) =
-        HumidifierContainer(syncId, items, playerInv, pos)
+        HumidifierContainer(syncId, items, playerInv)
 
     fun getInventory(): SidedInventory = SidedItemView(items)
 

@@ -13,8 +13,10 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.text.StringTextComponent
 import net.minecraft.text.TextComponent
+import net.minecraft.text.TextFormat
+import net.minecraft.text.TranslatableTextComponent
+import net.minecraft.util.DefaultedList
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World
 
@@ -57,6 +59,14 @@ class BacteriumBunchItem : Item(
         }
     }
 
+    override fun appendItemsForGroup(group: ItemGroup, list: DefaultedList<ItemStack>) {
+        if (isInItemGroup(group)) {
+            list += ItemStack(this).also { storeDataInStack(it, Data(type = Type.Harmful, isAnalyzed = true)) }
+            list += ItemStack(this).also { storeDataInStack(it, Data(type = Type.Neutral, isAnalyzed = true)) }
+            list += ItemStack(this).also { storeDataInStack(it, Data(type = Type.Helpful, isAnalyzed = true)) }
+        }
+    }
+
     @Environment(EnvType.CLIENT)
     override fun buildTooltip(
         stack: ItemStack,
@@ -65,20 +75,28 @@ class BacteriumBunchItem : Item(
         context: TooltipContext?
     ) {
         storeDataInStack(stack)
-        list.add(
-            StringTextComponent(
-                stack.tag?.getCompound("BacteriumData")
-                    ?.let(Data.Companion::fromTag)?.type?.name ?: ""
+        stack.tag?.let {
+            val data = it.getCompound("BacteriumData").let(Data.Companion::fromTag)
+
+            list.add(
+                TranslatableTextComponent(
+                    "$translationKey.${data.type.translationKey}"
+                ).applyFormat(TextFormat.DARK_GRAY).run {
+                    if (!data.isAnalyzed)
+                        applyFormat(TextFormat.OBFUSCATED)
+                    else this
+                }
             )
-        )
+        }
     }
 
-    data class Data(val lifetime: Double = 1.0, val hunger: Double = 1.0, val type: Type = Type.Harmful) {
+    data class Data(val lifetime: Double = 1.0, val hunger: Double = 1.0, val type: Type = Type.Harmful, val isAnalyzed: Boolean = false) {
         fun toTag(): CompoundTag =
             CompoundTag().apply {
                 putDouble("Lifetime", lifetime)
                 putDouble("Hunger", hunger)
                 putInt("Type", this@Data.type.ordinal)
+                putBoolean("Analyzed", isAnalyzed)
             }
 
         companion object {
@@ -97,15 +115,18 @@ class BacteriumBunchItem : Item(
                             MathHelper.clamp(tag.getInt("Type"), 0, Type.values().lastIndex)
                         ]
                     else default.type
+                val isAnalyzed =
+                    if (tag.containsKey("Analyzed")) tag.getBoolean("Analyzed")
+                    else default.isAnalyzed
 
-                return Data(lifetime, hunger, type)
+                return Data(lifetime, hunger, type, isAnalyzed)
             }
         }
     }
 
-    enum class Type(vararg val effects: StatusEffect) {
-        Helpful(StatusEffects.HASTE, StatusEffects.REGENERATION),
-        Neutral,
-        Harmful(StatusEffects.WEAKNESS, StatusEffects.POISON, StatusEffects.NAUSEA, StatusEffects.HUNGER)
+    enum class Type(val translationKey: String, vararg val effects: StatusEffect) {
+        Helpful("helpful", StatusEffects.HASTE, StatusEffects.REGENERATION),
+        Neutral("neutral"),
+        Harmful("harmful", StatusEffects.WEAKNESS, StatusEffects.POISON, StatusEffects.NAUSEA, StatusEffects.HUNGER)
     }
 }

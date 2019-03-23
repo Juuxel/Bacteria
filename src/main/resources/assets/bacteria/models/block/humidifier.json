@@ -3,13 +3,14 @@
   "textures": {
     "glass": "minecraft:block/cyan_stained_glass",
     "base": "minecraft:block/iron_block",
-    "side": "minecraft:block/iron_block"
+    "side": "minecraft:block/iron_block",
+    "particle": "minecraft:block/iron_block"
   },
   "elements": [
     {
       "__comment": "Base",
       "from": [0, 0, 0],
-      "to": [16, 4, 16],
+      "to": [16, 2, 16],
       "faces": {
         "down":  { "texture": "#base", "cullface": "down" },
         "up":    { "texture": "#base" },
@@ -21,8 +22,8 @@
     },
     {
       "__comment": "Top",
-      "from": [0, 10, 0],
-      "to": [16, 12, 16],
+      "from": [0, 14, 0],
+      "to": [16, 16, 16],
       "faces": {
         "down":  { "texture": "#base" },
         "up":    { "texture": "#base", "cullface": "up" },
@@ -34,13 +35,13 @@
     },
     {
       "__comment": "Window",
-      "from": [2, 4, 2],
-      "to": [14, 10, 14],
+      "from": [2, 2, 2],
+      "to": [14, 14, 14],
       "faces": {
-        "north": { "texture": "#glass" },
-        "east":  { "texture": "#glass" },
-        "south": { "texture": "#glass" },
-        "west":  { "texture": "#glass" }
+        "north": { "texture": "#glass", "uv": [0, 0, 16, 16] },
+        "east":  { "texture": "#glass", "uv": [0, 0, 16, 16] },
+        "south": { "texture": "#glass", "uv": [0, 0, 16, 16] },
+        "west":  { "texture": "#glass", "uv": [0, 0, 16, 16] }
       }
     }
   ]

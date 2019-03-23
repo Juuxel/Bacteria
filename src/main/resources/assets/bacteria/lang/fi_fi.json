@@ -1,0 +1,14 @@
+{
+  "block.bacteria.colony": "Bakteeriyhdyskunta",
+  "block.bacteria.humidifier": "Kosteuttaja",
+  "block.bacteria.microscope": "Mikroskooppi",
+  "chat.bacteria.invalid_block": "Laita syötävä palikka yhdyskunnan päälle.",
+  "chat.bacteria.jammed": "Lamautettiin kaikki bakteeriyhdyskunnat.",
+  "chat.bacteria.unjammed": "Vapautettiin kaikki bakteeriyhdyskunnat.",
+  "container.bacteria.humidifier": "Kosteuttaja",
+  "container.bacteria.microscope": "Mikroskooppi",
+  "item.bacteria.bacterium_bunch": "Bakteerikasa",
+  "item.bacteria.bacterium_bunch.harmful": "Haitallinen",
+  "item.bacteria.bacterium_bunch.neutral": "Neutraali",
+  "item.bacteria.bacterium_bunch.helpful": "Hyödyllinen"
+}
