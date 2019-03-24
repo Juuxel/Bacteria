@@ -34,10 +34,19 @@ class ColonyItem : BlockItem(ModBlocks.colony, Settings().itemGroup(Bacteria.ite
 
         if (stack.hasTag() && stack.tag!!.getCompound("BlockEntityTag").containsKey("BacteriumData")) {
             val data = BacteriumData.fromTag(stack.tag!!.getCompound("BlockEntityTag").getCompound("BacteriumData"))
+            val start = ModItems.bacteriumBunch.translationKey
+
+            list.add(
+                TranslatableTextComponent(
+                    "$start.${data.type.translationKey}"
+                ).applyFormat(TextFormat.DARK_GRAY).run {
+                    if (!data.isAnalyzed)
+                        applyFormat(TextFormat.OBFUSCATED)
+                    else this
+                }
+            )
 
             if (data.isAnalyzed) {
-                val start = ModItems.bacteriumBunch.translationKey
-
                 list.add(
                     TranslatableTextComponent("$start.lifetime", BacteriumBunchItem.numberFormat.format(data.lifetime))
                         .applyFormat(TextFormat.DARK_GRAY)
