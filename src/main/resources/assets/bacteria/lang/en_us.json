@@ -10,5 +10,7 @@
   "item.bacteria.bacterium_bunch": "Bunch of Bacteria",
   "item.bacteria.bacterium_bunch.harmful": "Harmful",
   "item.bacteria.bacterium_bunch.neutral": "Neutral",
-  "item.bacteria.bacterium_bunch.helpful": "Helpful"
+  "item.bacteria.bacterium_bunch.helpful": "Helpful",
+  "item.bacteria.bacterium_bunch.lifetime": "Lifetime: %s",
+  "item.bacteria.bacterium_bunch.hunger": "Hunger: %s"
 }

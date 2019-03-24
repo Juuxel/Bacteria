@@ -7,6 +7,7 @@ import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Direction;
 
+// Copied from United Manufacturing
 public class SidedItemView implements SidedInventory {
     protected SimpleItemComponent delegate;
 

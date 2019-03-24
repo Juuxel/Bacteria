@@ -10,5 +10,7 @@
   "item.bacteria.bacterium_bunch": "Bakteerikasa",
   "item.bacteria.bacterium_bunch.harmful": "Haitallinen",
   "item.bacteria.bacterium_bunch.neutral": "Neutraali",
-  "item.bacteria.bacterium_bunch.helpful": "Hyödyllinen"
+  "item.bacteria.bacterium_bunch.helpful": "Hyödyllinen",
+  "item.bacteria.bacterium_bunch.lifetime": "Elinikä: %s",
+  "item.bacteria.bacterium_bunch.hunger": "Nälkä: %s"
 }

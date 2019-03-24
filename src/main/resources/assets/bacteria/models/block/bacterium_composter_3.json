@@ -1,0 +1,16 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "particle": "bacteria:block/colony",
+    "colony": "bacteria:block/colony"
+  },
+  "elements": [
+    {
+      "from": [2, 8, 2],
+      "to": [14, 11, 14],
+      "faces": {
+        "up": { "texture": "#colony" }
+      }
+    }
+  ]
+}

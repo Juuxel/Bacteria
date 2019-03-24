@@ -1,24 +1,28 @@
 package juuxel.bacteria.item
 
+import juuxel.bacteria.BacteriumData
+import juuxel.bacteria.block.BacteriumComposterBlock
+import juuxel.bacteria.block.entity.BacteriumComposterEntity
+import juuxel.bacteria.lib.ModBlocks
 import juuxel.bacteria.util.ModContent
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.minecraft.block.Blocks
 import net.minecraft.client.item.TooltipContext
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.effect.StatusEffect
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
-import net.minecraft.item.FoodItemSetting
-import net.minecraft.item.Item
-import net.minecraft.item.ItemGroup
-import net.minecraft.item.ItemStack
-import net.minecraft.nbt.CompoundTag
+import net.minecraft.item.*
+import net.minecraft.state.property.Properties
 import net.minecraft.text.TextComponent
 import net.minecraft.text.TextFormat
 import net.minecraft.text.TranslatableTextComponent
+import net.minecraft.util.ActionResult
 import net.minecraft.util.DefaultedList
-import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World
+import java.text.NumberFormat
+import java.util.*
+import kotlin.math.roundToInt
 
 class BacteriumBunchItem : Item(
     Settings().food(
@@ -39,7 +43,7 @@ class BacteriumBunchItem : Item(
         if (world.isClient) return@apply
 
         storeDataInStack(stack)
-        stack.tag?.getCompound("BacteriumData")?.let(Data.Companion::fromTag)?.let {
+        stack.tag?.getCompound("BacteriumData")?.let(BacteriumData.Companion::fromTag)?.let {
             if (it.type.effects.isNotEmpty()) {
                 entity.addPotionEffect(
                     StatusEffectInstance(
@@ -48,10 +52,20 @@ class BacteriumBunchItem : Item(
                     )
                 )
             }
+
+            val hungerLevel = (it.hunger - 2.0).roundToInt()
+            if (hungerLevel >= 0) {
+                entity.addPotionEffect(
+                    StatusEffectInstance(
+                        StatusEffects.HUNGER,
+                        600, hungerLevel
+                    )
+                )
+            }
         }
     }
 
-    private fun storeDataInStack(stack: ItemStack, data: Data = Data.default) {
+    private fun storeDataInStack(stack: ItemStack, data: BacteriumData = BacteriumData.default) {
         stack.getOrCreateTag().let { tag ->
             if (!tag.containsKey("BacteriumData")) {
                 tag.put("BacteriumData", data.toTag())
@@ -61,10 +75,64 @@ class BacteriumBunchItem : Item(
 
     override fun appendItemsForGroup(group: ItemGroup, list: DefaultedList<ItemStack>) {
         if (isInItemGroup(group)) {
-            list += ItemStack(this).also { storeDataInStack(it, Data(type = Type.Harmful, isAnalyzed = true)) }
-            list += ItemStack(this).also { storeDataInStack(it, Data(type = Type.Neutral, isAnalyzed = true)) }
-            list += ItemStack(this).also { storeDataInStack(it, Data(type = Type.Helpful, isAnalyzed = true)) }
+            list += ItemStack(this).also { storeDataInStack(it,
+                BacteriumData(type = BacteriumData.Type.Harmful, isAnalyzed = true)
+            ) }
+            list += ItemStack(this).also { storeDataInStack(it,
+                BacteriumData(type = BacteriumData.Type.Neutral, isAnalyzed = true)
+            ) }
+            list += ItemStack(this).also { storeDataInStack(it,
+                BacteriumData(type = BacteriumData.Type.Helpful, isAnalyzed = true)
+            ) }
         }
+    }
+
+    override fun useOnBlock(context: ItemUsageContext): ActionResult {
+        if (context.world.isClient) return super.useOnBlock(context)
+
+        val world = context.world
+        val stack = context.itemStack
+        val pos = context.blockPos
+        val state = context.world.getBlockState(pos)
+        var filled = false
+        var level = 0
+
+        if (state.block == Blocks.COMPOSTER) {
+            if (state[Properties.COMPOSTER_LEVEL] == 0) {
+                filled = true
+            }
+        }
+
+        if (state.block == ModBlocks.bacteriumComposter) {
+            level = state[BacteriumComposterBlock.LEVEL]
+
+            if (level < 4) {
+                filled = true
+            }
+        }
+
+        if (filled) {
+            val entity = world.getBlockEntity(pos) as? BacteriumComposterEntity ?: return super.useOnBlock(context)
+
+            entity.contents.add(
+                BacteriumData.fromTag(
+                    stack.tag?.getCompound("BacteriumData") ?: return super.useOnBlock(context)
+                )
+            )
+
+            if (context.player?.isCreative == true) {
+                stack.subtractAmount(1)
+            }
+
+            world.setBlockState(
+                pos,
+                ModBlocks.bacteriumComposter.defaultState.with(BacteriumComposterBlock.LEVEL, level + 1)
+            )
+
+            return ActionResult.SUCCESS
+        }
+
+        return super.useOnBlock(context)
     }
 
     @Environment(EnvType.CLIENT)
@@ -76,7 +144,7 @@ class BacteriumBunchItem : Item(
     ) {
         storeDataInStack(stack)
         stack.tag?.let {
-            val data = it.getCompound("BacteriumData").let(Data.Companion::fromTag)
+            val data = it.getCompound("BacteriumData").let(BacteriumData.Companion::fromTag)
 
             list.add(
                 TranslatableTextComponent(
@@ -87,46 +155,24 @@ class BacteriumBunchItem : Item(
                     else this
                 }
             )
-        }
-    }
 
-    data class Data(val lifetime: Double = 1.0, val hunger: Double = 1.0, val type: Type = Type.Harmful, val isAnalyzed: Boolean = false) {
-        fun toTag(): CompoundTag =
-            CompoundTag().apply {
-                putDouble("Lifetime", lifetime)
-                putDouble("Hunger", hunger)
-                putInt("Type", this@Data.type.ordinal)
-                putBoolean("Analyzed", isAnalyzed)
-            }
-
-        companion object {
-            val default = Data()
-
-            fun fromTag(tag: CompoundTag): Data {
-                val lifetime =
-                    if (tag.containsKey("Lifetime")) tag.getDouble("Lifetime")
-                    else default.lifetime
-                val hunger =
-                    if (tag.containsKey("Hunger")) tag.getDouble("Hunger")
-                    else default.hunger
-                val type =
-                    if (tag.containsKey("Lifetime"))
-                        Type.values()[
-                            MathHelper.clamp(tag.getInt("Type"), 0, Type.values().lastIndex)
-                        ]
-                    else default.type
-                val isAnalyzed =
-                    if (tag.containsKey("Analyzed")) tag.getBoolean("Analyzed")
-                    else default.isAnalyzed
-
-                return Data(lifetime, hunger, type, isAnalyzed)
+            if (data.isAnalyzed) {
+                list.add(
+                    TranslatableTextComponent("$translationKey.lifetime", numberFormat.format(data.lifetime))
+                        .applyFormat(TextFormat.DARK_GRAY)
+                )
+                list.add(
+                    TranslatableTextComponent("$translationKey.hunger", numberFormat.format(data.hunger))
+                        .applyFormat(TextFormat.DARK_GRAY)
+                )
             }
         }
     }
 
-    enum class Type(val translationKey: String, vararg val effects: StatusEffect) {
-        Helpful("helpful", StatusEffects.HASTE, StatusEffects.REGENERATION),
-        Neutral("neutral"),
-        Harmful("harmful", StatusEffects.WEAKNESS, StatusEffects.POISON, StatusEffects.NAUSEA, StatusEffects.HUNGER)
+    companion object {
+        internal val numberFormat = (NumberFormat.getNumberInstance(Locale.ROOT).clone() as NumberFormat).apply {
+            minimumFractionDigits = 1
+            maximumFractionDigits = 2
+        }
     }
 }

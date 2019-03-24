@@ -31,7 +31,7 @@ abstract class ModRegistry {
     protected fun <T : ModBlock> registerBlock(content: T): T {
         register(Registry.BLOCK, content)
 
-        if (content.registerItem)
+        if (content.itemSettings != null)
             Registry.register(
                 Registry.ITEM,
                 Identifier("bacteria", content.name),

@@ -1,7 +1,7 @@
 package juuxel.bacteria.recipe
 
 import com.google.gson.JsonObject
-import juuxel.bacteria.item.BacteriumBunchItem
+import juuxel.bacteria.BacteriumData
 import juuxel.bacteria.lib.ModItems
 import juuxel.bacteria.lib.ModRecipes
 import juuxel.bacteria.util.ModContent
@@ -18,12 +18,10 @@ import net.minecraft.world.World
 class HumidifyingRecipe(private val input: Ingredient) : Recipe<Inventory>, ModContent<Recipe<Inventory>> {
     override val name = "humidifying"
     private val recipeId = Identifier("bacteria", name)
-    private val output = ItemStack(ModItems.bacteriumBunch).apply {
-        getOrCreateTag().put("BacteriumData", BacteriumBunchItem.Data.default.toTag())
-    }
+    private val output = BacteriumData.default.toBunchItemStack()
 
     override fun craft(inv: Inventory) = ItemStack(ModItems.bacteriumBunch).apply {
-        getOrCreateTag().put("BacteriumData", BacteriumBunchItem.Data(type = BacteriumBunchItem.Type.values().random()).toTag())
+        getOrCreateTag().put("BacteriumData", BacteriumData(type = BacteriumData.Type.values().random()).toTag())
     }
     override fun getId() = recipeId
     override fun getType() = ModRecipes.humidifying

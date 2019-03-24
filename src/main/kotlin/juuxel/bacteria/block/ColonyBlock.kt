@@ -1,8 +1,6 @@
 package juuxel.bacteria.block
 
 import juuxel.bacteria.block.entity.ColonyEntity
-import juuxel.bacteria.item.BacteriumBunchItem
-import juuxel.bacteria.lib.ModItems
 import juuxel.bacteria.lib.ModTags
 import net.fabricmc.fabric.api.block.FabricBlockSettings
 import net.minecraft.block.*
@@ -21,7 +19,7 @@ import net.minecraft.world.World
 
 class ColonyBlock : BBlockWithEntity(FabricBlockSettings.copy(Blocks.SPONGE).dropsNothing().build()) {
     override val name = "colony"
-    override val itemSettings = Item.Settings()
+    override val itemSettings = null
     override val blockEntityType = Companion.blockEntityType
 
     @Deprecated("Mojang is weird")
@@ -52,18 +50,10 @@ class ColonyBlock : BBlockWithEntity(FabricBlockSettings.copy(Blocks.SPONGE).dro
         stack: ItemStack?
     ) {
         super.afterBreak(world, player, pos, state, be, stack)
-        Block.dropStack(
-            world,
-            pos,
-            ItemStack(ModItems.bacteriumBunch, (0..3).random()).apply {
-                getOrCreateTag().put(
-                    "BacteriumData",
-                    BacteriumBunchItem.Data(
-                        // TODO: Bacterium data and evolution
-                    ).toTag()
-                )
-            }
-        )
+
+        if (be is ColonyEntity) {
+            be.dropItems()
+        }
     }
 
     companion object {

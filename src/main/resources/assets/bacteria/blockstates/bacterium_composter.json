@@ -1,0 +1,9 @@
+{
+  "multipart": [
+    { "apply": { "model": "block/composter" } },
+    { "when": { "level": 1 }, "apply": { "model": "bacteria:block/bacterium_composter_1" } },
+    { "when": { "level": 2 }, "apply": { "model": "bacteria:block/bacterium_composter_2" } },
+    { "when": { "level": 3 }, "apply": { "model": "bacteria:block/bacterium_composter_3" } },
+    { "when": { "level": 4 }, "apply": { "model": "bacteria:block/bacterium_composter_4" } }
+  ]
+}
