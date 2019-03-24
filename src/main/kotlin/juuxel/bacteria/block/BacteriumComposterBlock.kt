@@ -2,7 +2,6 @@ package juuxel.bacteria.block
 
 import juuxel.bacteria.BacteriumData
 import juuxel.bacteria.block.entity.BacteriumComposterEntity
-import juuxel.bacteria.block.entity.ColonyEntity
 import juuxel.bacteria.item.BacteriumBunchItem
 import juuxel.bacteria.lib.ModBlocks
 import net.fabricmc.fabric.api.block.FabricBlockSettings
@@ -20,17 +19,12 @@ import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import net.minecraft.world.loot.context.LootContext
 import java.util.*
 
 class BacteriumComposterBlock : BBlockWithEntity(FabricBlockSettings.copy(Blocks.COMPOSTER).ticksRandomly().build()) {
     override val name = "bacterium_composter"
     override val itemSettings: Nothing? = null
     override val blockEntityType = Companion.blockEntityType
-
-    init {
-        defaultState = stateFactory.defaultState.with(LEVEL, 0)
-    }
 
     override fun appendProperties(builder: StateFactory.Builder<Block, BlockState>) {
         builder.with(LEVEL)
@@ -72,7 +66,7 @@ class BacteriumComposterBlock : BBlockWithEntity(FabricBlockSettings.copy(Blocks
     override fun onRandomTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
         if (!world.isClient && state[LEVEL] == 4) {
             val entity = world.getBlockEntity(pos) as? BacteriumComposterEntity ?: return
-            world.setBlockState(pos, state.with(LEVEL, 0))
+            world.setBlockState(pos, Blocks.COMPOSTER.defaultState)
             val data = combineBacteria(entity.contents)
             entity.contents.clear()
             Block.dropStack(world, pos, ItemStack(ModBlocks.colony, 1).apply {
@@ -92,7 +86,7 @@ class BacteriumComposterBlock : BBlockWithEntity(FabricBlockSettings.copy(Blocks
     }
 
     companion object {
-        val LEVEL = IntegerProperty.create("level", 0, 4)
+        val LEVEL = IntegerProperty.create("level", 1, 4)
         val blockEntityType = BlockEntityType(::BacteriumComposterEntity, null)
     }
 }

@@ -1,6 +1,80 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "block/block",
   "textures": {
-    "all": "bacteria:block/microscope"
-  }
+    "stone_top": "block/smooth_stone",
+    "stone_side": "block/smooth_stone_slab_side",
+    "glass": "block/glass",
+    "wood": "block/oak_log",
+    "particle": "block/smooth_stone"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 8, 16],
+      "faces": {
+        "down":  { "texture": "#stone_top", "cullface": "down" },
+        "up":    { "texture": "#stone_top" },
+        "north": { "texture": "#stone_side", "cullface": "north" },
+        "east":  { "texture": "#stone_side", "cullface": "east" },
+        "south": { "texture": "#stone_side", "cullface": "south" },
+        "west":  { "texture": "#stone_side", "cullface": "west" }
+      }
+    },
+    {
+      "from": [2, 12, 2],
+      "to": [14, 13, 14],
+      "faces": {
+        "down":  { "texture": "#glass", "uv": [0, 0, 16, 16] },
+        "up":    { "texture": "#glass", "uv": [0, 0, 16, 16] },
+        "north": { "texture": "#glass", "uv": [0, 0, 16, 1] },
+        "east":  { "texture": "#glass", "uv": [0, 0, 16, 1] },
+        "south": { "texture": "#glass", "uv": [0, 0, 16, 1] },
+        "west":  { "texture": "#glass", "uv": [0, 0, 16, 1] }
+      }
+    },
+    {
+      "from": [2, 8, 2],
+      "to": [4, 12, 4],
+      "faces": {
+        "up":    { "texture": "#wood" },
+        "north": { "texture": "#wood" },
+        "east":  { "texture": "#wood" },
+        "south": { "texture": "#wood" },
+        "west":  { "texture": "#wood" }
+      }
+    },
+    {
+      "from": [12, 8, 2],
+      "to": [14, 12, 4],
+      "faces": {
+        "up":    { "texture": "#wood" },
+        "north": { "texture": "#wood" },
+        "east":  { "texture": "#wood" },
+        "south": { "texture": "#wood" },
+        "west":  { "texture": "#wood" }
+      }
+    },
+    {
+      "from": [2, 8, 12],
+      "to": [4, 12, 14],
+      "faces": {
+        "up":    { "texture": "#wood" },
+        "north": { "texture": "#wood" },
+        "east":  { "texture": "#wood" },
+        "south": { "texture": "#wood" },
+        "west":  { "texture": "#wood" }
+      }
+    },
+    {
+      "from": [12, 8, 12],
+      "to": [14, 12, 14],
+      "faces": {
+        "up":    { "texture": "#wood" },
+        "north": { "texture": "#wood" },
+        "east":  { "texture": "#wood" },
+        "south": { "texture": "#wood" },
+        "west":  { "texture": "#wood" }
+      }
+    }
+  ]
 }

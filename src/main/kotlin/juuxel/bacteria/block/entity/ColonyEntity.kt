@@ -4,19 +4,18 @@ import juuxel.bacteria.Bacteria
 import juuxel.bacteria.BacteriumData
 import juuxel.bacteria.block.ColonyBlock
 import juuxel.bacteria.lib.ModBlocks
-import juuxel.bacteria.lib.ModItems
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.block.Waterloggable
 import net.minecraft.block.entity.BlockEntity
-import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Tickable
 import net.minecraft.util.math.Direction
+import net.minecraft.util.math.MathHelper
 import net.minecraft.util.registry.Registry
-import kotlin.math.roundToInt
+import kotlin.math.ceil
 
 class ColonyEntity : BlockEntity(ColonyBlock.blockEntityType), Tickable {
     internal var target: Block? = null
@@ -27,7 +26,7 @@ class ColonyEntity : BlockEntity(ColonyBlock.blockEntityType), Tickable {
     override fun tick() {
         if (world.isClient) return
 
-        val lifetimeRandomMax = (16 * data.lifetime).roundToInt()
+        val lifetimeRandomMax = ceil(16 * data.lifetime).toInt()
         if (target != null && world.random.nextInt(lifetimeRandomMax) == 0) {
             age++
         }
@@ -44,7 +43,7 @@ class ColonyEntity : BlockEntity(ColonyBlock.blockEntityType), Tickable {
         Direction.values().forEach { direction ->
             val offsetPos = pos.offset(direction)
             val state = world.getBlockState(offsetPos)
-            val randomMax = (16 / (data.hunger / 0.5)).roundToInt()
+            val randomMax = ceil(16 / (data.hunger / 0.5)).toInt()
             if (world.random.nextInt(randomMax) == 0 && matchesTarget(state)) {
                 world.setBlockState(offsetPos, ModBlocks.colony.defaultState)
                 hasEaten = true
@@ -53,11 +52,11 @@ class ColonyEntity : BlockEntity(ColonyBlock.blockEntityType), Tickable {
 
                     // Mutation
                     if (world.random.nextInt(4) == 0) {
-                        val newLifetime = data.lifetime + world.random.nextDouble() * 0.3
-                        val newHunger = data.hunger + world.random.nextDouble() * 0.3
+                        val newLifetime = MathHelper.clamp(data.lifetime + world.random.nextDouble() * 0.5 - 0.25, 0.5, 10.0)
+                        val newHunger = MathHelper.clamp(data.hunger + world.random.nextDouble() * 0.5 - 0.25, 0.5, 10.0)
 
                         val newType =
-                            if (world.random.nextInt(6) == 0)
+                            if (world.random.nextInt(3) == 0)
                                 BacteriumData.Type.values().random()
                             else data.type
 

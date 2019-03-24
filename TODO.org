@@ -1,6 +1,8 @@
-* TODO Bacteria 0.1.0 [0/3]
-- [-] Machines
-  - [-] Humidifier
-  - [ ] Bacterial Analyzer
-- [ ] Make Data.hunger affect the player
-- [ ] Evolution
+* TODO Bacteria 0.1.0 [3/5]
+- [X] Machines
+  - [X] Humidifier
+  - [X] Microscope
+- [X] Make Data.hunger affect the player
+- [X] Evolution
+- [ ] Recipes
+- [ ] Colony textures

@@ -1,47 +1,87 @@
 {
   "parent": "block/block",
   "textures": {
-    "glass": "minecraft:block/cyan_stained_glass",
-    "base": "minecraft:block/iron_block",
-    "side": "minecraft:block/iron_block",
+    "glass": "minecraft:block/glass",
+    "iron": "minecraft:block/iron_block",
+    "water": "minecraft:block/water_still",
     "particle": "minecraft:block/iron_block"
   },
   "elements": [
     {
       "__comment": "Base",
       "from": [0, 0, 0],
-      "to": [16, 2, 16],
+      "to": [16, 6, 16],
       "faces": {
-        "down":  { "texture": "#base", "cullface": "down" },
-        "up":    { "texture": "#base" },
-        "north": { "texture": "#side", "cullface": "north" },
-        "east":  { "texture": "#side", "cullface": "east" },
-        "south": { "texture": "#side", "cullface": "south" },
-        "west":  { "texture": "#side", "cullface": "west" }
+        "down":  { "texture": "#iron", "cullface": "down" },
+        "up":    { "texture": "#iron" },
+        "north": { "texture": "#iron", "cullface": "north" },
+        "east":  { "texture": "#iron", "cullface": "east" },
+        "south": { "texture": "#iron", "cullface": "south" },
+        "west":  { "texture": "#iron", "cullface": "west" }
       }
     },
     {
-      "__comment": "Top",
-      "from": [0, 14, 0],
-      "to": [16, 16, 16],
+      "from": [0, 6, 0],
+      "to": [2, 10, 16],
       "faces": {
-        "down":  { "texture": "#base" },
-        "up":    { "texture": "#base", "cullface": "up" },
-        "north": { "texture": "#side", "cullface": "north" },
-        "east":  { "texture": "#side", "cullface": "east" },
-        "south": { "texture": "#side", "cullface": "south" },
-        "west":  { "texture": "#side", "cullface": "west" }
+        "up":    { "texture": "#iron" },
+        "north": { "texture": "#iron", "cullface": "north" },
+        "east":  { "texture": "#iron" },
+        "south": { "texture": "#iron", "cullface": "south" },
+        "west":  { "texture": "#iron" }
       }
     },
     {
-      "__comment": "Window",
-      "from": [2, 2, 2],
-      "to": [14, 14, 14],
+      "from": [14, 6, 0],
+      "to": [16, 10, 16],
       "faces": {
-        "north": { "texture": "#glass", "uv": [0, 0, 16, 16] },
-        "east":  { "texture": "#glass", "uv": [0, 0, 16, 16] },
-        "south": { "texture": "#glass", "uv": [0, 0, 16, 16] },
-        "west":  { "texture": "#glass", "uv": [0, 0, 16, 16] }
+        "up":    { "texture": "#iron" },
+        "north": { "texture": "#iron", "cullface": "north" },
+        "east":  { "texture": "#iron" },
+        "south": { "texture": "#iron", "cullface": "south" },
+        "west":  { "texture": "#iron" }
+      }
+    },
+    {
+      "from": [2, 6, 0],
+      "to": [14, 10, 2],
+      "faces": {
+        "up":    { "texture": "#iron" },
+        "north": { "texture": "#iron" },
+        "east":  { "texture": "#iron", "cullface": "east" },
+        "south": { "texture": "#iron" },
+        "west":  { "texture": "#iron", "cullface": "west" }
+      }
+    },
+    {
+      "from": [2, 6, 14],
+      "to": [14, 10, 16],
+      "faces": {
+        "up":    { "texture": "#iron" },
+        "north": { "texture": "#iron" },
+        "east":  { "texture": "#iron", "cullface": "east" },
+        "south": { "texture": "#iron" },
+        "west":  { "texture": "#iron", "cullface": "west" }
+      }
+    },
+    {
+      "__comment": "Water",
+      "from": [2, 6, 2],
+      "to": [14, 9, 14],
+      "faces": {
+        "up": { "texture": "#water", "tintindex": 0 }
+      }
+    },
+    {
+      "__comment": "Glass",
+      "from": [0, 10, 0],
+      "to": [16, 11, 16],
+      "faces": {
+        "up":    { "texture": "#glass" },
+        "north": { "texture": "#glass", "uv": [0, 0, 16, 1], "cullface": "north" },
+        "east":  { "texture": "#glass", "uv": [0, 0, 16, 1], "cullface": "east" },
+        "south": { "texture": "#glass", "uv": [0, 0, 16, 1], "cullface": "south" },
+        "west":  { "texture": "#glass", "uv": [0, 0, 16, 1], "cullface": "west" }
       }
     }
   ]

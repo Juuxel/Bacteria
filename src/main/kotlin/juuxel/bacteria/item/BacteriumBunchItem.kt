@@ -1,5 +1,6 @@
 package juuxel.bacteria.item
 
+import juuxel.bacteria.Bacteria
 import juuxel.bacteria.BacteriumData
 import juuxel.bacteria.block.BacteriumComposterBlock
 import juuxel.bacteria.block.entity.BacteriumComposterEntity
@@ -31,7 +32,7 @@ class BacteriumBunchItem : Item(
             .alwaysEdible()
             .eatenFast()
             .build()
-    ).itemGroup(ItemGroup.FOOD)
+    ).itemGroup(Bacteria.itemGroup)
 ), ModContent<Item> {
     override val name = "bacterium_bunch"
 
@@ -99,6 +100,8 @@ class BacteriumBunchItem : Item(
 
         if (state.block == Blocks.COMPOSTER) {
             if (state[Properties.COMPOSTER_LEVEL] == 0) {
+                // Replacing the composter with a bacterium composter
+                world.setBlockState(pos, ModBlocks.bacteriumComposter.defaultState)
                 filled = true
             }
         }
@@ -120,7 +123,7 @@ class BacteriumBunchItem : Item(
                 )
             )
 
-            if (context.player?.isCreative == true) {
+            if (context.player?.isCreative != true) {
                 stack.subtractAmount(1)
             }
 
