@@ -2,6 +2,7 @@ package juuxel.bacteria.container.gui
 
 import com.mojang.blaze3d.platform.GlStateManager
 import net.minecraft.client.gui.ContainerScreen
+import net.minecraft.client.gui.DrawableHelper
 import net.minecraft.container.Container
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.text.TranslatableTextComponent
@@ -42,5 +43,12 @@ open class BacteriaContainerScreen<C : Container>(
             (this.height - 96 + 2).toFloat(),
             4210752
         )
+    }
+
+    protected fun drawOutline(x1: Int, y1: Int, x2: Int, y2: Int, color: Int) {
+        drawRect(x1, y1, x2, y1 + 1, color) // Top
+        drawRect(x1, y2 - 1, x2, y2, color) // Bottom
+        drawRect(x1, y1, x1 + 1, y2, color) // Left
+        drawRect(x2 - 1, y1, x2, y2, color) // Right
     }
 }

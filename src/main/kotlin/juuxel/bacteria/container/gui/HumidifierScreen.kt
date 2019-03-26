@@ -16,11 +16,12 @@ class HumidifierScreen(container: HumidifierContainer, player: PlayerEntity) :
 
     override fun drawForeground(int_1: Int, int_2: Int) {
         super.drawForeground(int_1, int_2)
-        val ratio = 66f / HumidifierEntity.MAX_PROGRESS.toFloat()
-        drawRect(59, 55, 58 + 69, 56, Colors.BLACK)
-        drawRect(59, 60, 58 + 69, 61, Colors.BLACK)
-        drawRect(59, 55, 60, 61, Colors.BLACK)
-        drawRect(58 + 68, 55, 58 + 69, 61, Colors.BLACK)
-        drawRect(60, 56, 60 + ceil(ratio * container.propertyDelegate[0]).toInt(), 60, Colors.GREEN)
+        val progressRatio = 66f / HumidifierEntity.MAX_PROGRESS.toFloat()
+        drawOutline(59, 55, 58 + 69, 61, Colors.BLACK)
+        drawRect(60, 56, 60 + ceil(progressRatio * container.propertyDelegate[0]).toInt(), 60, Colors.GREEN)
+
+        val fluidRatio = 28f / HumidifierEntity.TANK_SIZE.toFloat()
+        drawOutline(40, 30, 45, 60, Colors.BLUE)
+        drawRect(41, 59 - ceil(fluidRatio * container.propertyDelegate[1]).toInt(), 44, 59, Colors.LIGHT_BLUE)
     }
 }
