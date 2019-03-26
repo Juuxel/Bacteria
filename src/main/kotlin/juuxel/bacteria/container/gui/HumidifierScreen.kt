@@ -20,8 +20,8 @@ class HumidifierScreen(container: HumidifierContainer, player: PlayerEntity) :
         drawOutline(59, 55, 58 + 69, 61, Colors.BLACK)
         drawRect(60, 56, 60 + ceil(progressRatio * container.propertyDelegate[0]).toInt(), 60, Colors.GREEN)
 
-        val fluidRatio = 28f / HumidifierEntity.TANK_SIZE.toFloat()
-        drawOutline(40, 30, 45, 60, Colors.BLUE)
-        drawRect(41, 59 - ceil(fluidRatio * container.propertyDelegate[1]).toInt(), 44, 59, Colors.LIGHT_BLUE)
+        val fluidRatio = 58f / HumidifierEntity.TANK_SIZE.toFloat()
+        drawOutline(140, 15, 155, 75, Colors.BLUE)
+        drawRect(141, 74 - ceil(fluidRatio * container.propertyDelegate[1]).toInt(), 154, 74, Colors.LIGHT_BLUE)
     }
 }

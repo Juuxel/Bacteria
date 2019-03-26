@@ -11,6 +11,7 @@ import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeFinder
 import net.minecraft.recipe.RecipeInputProvider
 
+// TODO: Center the slots
 class HumidifierContainer(
     syncId: Int, private val inv: Inventory, playerInv: PlayerInventory, val propertyDelegate: PropertyDelegate
 ) : CraftingContainer<Inventory>(null, syncId) {
