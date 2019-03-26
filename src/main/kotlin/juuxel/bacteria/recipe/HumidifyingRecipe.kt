@@ -21,7 +21,7 @@ class HumidifyingRecipe(private val input: Ingredient) : Recipe<Inventory>, ModC
     private val output = BacteriumData.default.toBunchItemStack()
 
     override fun craft(inv: Inventory) = ItemStack(ModItems.bacteriumBunch).apply {
-        getOrCreateTag().put("BacteriumData", BacteriumData(type = BacteriumData.Type.values().random()).toTag())
+        getOrCreateTag().put("BacteriumData", BacteriumData(type = getCompatibleType(inv.getInvStack(1))).toTag())
     }
     override fun getId() = recipeId
     override fun getType() = ModRecipes.humidifying
@@ -29,6 +29,10 @@ class HumidifyingRecipe(private val input: Ingredient) : Recipe<Inventory>, ModC
     override fun getSerializer() = ModRecipes.humidifyingSerializer
     override fun getOutput(): ItemStack = output
     override fun matches(inv: Inventory, world: World?) = input.test(inv.getInvStack(0))
+
+    private fun getCompatibleType(stack: ItemStack): BacteriumData.Type =
+        if (stack.isEmpty || stack.tag == null) BacteriumData.Type.values().random()
+        else BacteriumData.Type.fromInt(stack.tag!!.getCompound("BacteriumData").getInt("Type"))
 
     class Serializer : RecipeSerializer<HumidifyingRecipe> {
         override fun write(buf: PacketByteBuf, recipe: HumidifyingRecipe) {

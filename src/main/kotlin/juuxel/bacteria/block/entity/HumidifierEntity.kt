@@ -6,6 +6,7 @@ import juuxel.bacteria.component.SimpleItemComponent
 import juuxel.bacteria.component.wrapper.SidedItemView
 import juuxel.bacteria.container.HumidifierContainer
 import juuxel.bacteria.lib.ModRecipes
+import juuxel.bacteria.util.SimplePropertyDelegate
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.container.ContainerProvider
 import net.minecraft.entity.player.PlayerEntity
@@ -21,6 +22,7 @@ class HumidifierEntity : BlockEntity(HumidifierBlock.blockEntityType), Container
     private val items = SimpleItemComponent(2)
     var progress = 0
         private set
+    val propertyDelegate = SimplePropertyDelegate(this::progress, { progress = it })
 
     init {
         items.listen(this::markDirty)
@@ -38,7 +40,7 @@ class HumidifierEntity : BlockEntity(HumidifierBlock.blockEntityType), Container
     }
 
     override fun createMenu(syncId: Int, playerInv: PlayerInventory, player: PlayerEntity) =
-        HumidifierContainer(syncId, items, playerInv)
+        HumidifierContainer(syncId, items, playerInv, propertyDelegate)
 
     fun getInventory(): SidedInventory = SidedItemView(items)
 
@@ -48,6 +50,7 @@ class HumidifierEntity : BlockEntity(HumidifierBlock.blockEntityType), Container
 
     override fun tick() {
         if (world.isClient) return
+        val initialProgress = progress
 
         if (!items[0].isEmpty) {
             val optionalRecipe = world.recipeManager[ModRecipes.humidifying, items, world]
@@ -67,6 +70,10 @@ class HumidifierEntity : BlockEntity(HumidifierBlock.blockEntityType), Container
             }
         } else {
             progress = 0
+        }
+
+        if (progress != initialProgress) {
+            markDirty()
         }
     }
 

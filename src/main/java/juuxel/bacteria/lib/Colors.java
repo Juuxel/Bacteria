@@ -10,4 +10,5 @@ public final class Colors {
     public static final int BLUE = 0xFF_0000FF;
     public static final int GREEN = 0xFF_00FF00;
     public static final int LIGHT_BLUE = 0xFF_3CACFC;
+    public static final int BLACK = 0xFF_000000;
 }

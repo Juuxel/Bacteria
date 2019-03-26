@@ -35,14 +35,8 @@ data class BacteriumData(val lifetime: Double = 1.0, val hunger: Double = 1.0, v
                 if (tag.containsKey("Hunger")) tag.getDouble("Hunger")
                 else default.hunger
             val type =
-                if (tag.containsKey("Lifetime"))
-                    Type.values()[
-                            MathHelper.clamp(
-                                tag.getInt("Type"),
-                                0,
-                                Type.values().lastIndex
-                            )
-                    ]
+                if (tag.containsKey("Type"))
+                    Type.fromInt(tag.getInt("Type"))
                 else default.type
             val isAnalyzed =
                 if (tag.containsKey("Analyzed")) tag.getBoolean("Analyzed")
@@ -63,6 +57,17 @@ data class BacteriumData(val lifetime: Double = 1.0, val hunger: Double = 1.0, v
             StatusEffects.POISON,
             StatusEffects.NAUSEA,
             StatusEffects.HUNGER
-        )
+        );
+
+        companion object {
+            fun fromInt(i: Int) =
+                values()[
+                        MathHelper.clamp(
+                            i,
+                            0,
+                            values().lastIndex
+                        )
+                ]
+        }
     }
 }

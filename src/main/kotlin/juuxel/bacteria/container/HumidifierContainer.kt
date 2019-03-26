@@ -1,6 +1,7 @@
 package juuxel.bacteria.container
 
 import net.minecraft.container.CraftingContainer
+import net.minecraft.container.PropertyDelegate
 import net.minecraft.container.Slot
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
@@ -9,10 +10,9 @@ import net.minecraft.item.ItemStack
 import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeFinder
 import net.minecraft.recipe.RecipeInputProvider
-import net.minecraft.util.math.BlockPos
 
 class HumidifierContainer(
-    syncId: Int, private val inv: Inventory, playerInv: PlayerInventory
+    syncId: Int, private val inv: Inventory, playerInv: PlayerInventory, val propertyDelegate: PropertyDelegate
 ) : CraftingContainer<Inventory>(null, syncId) {
     private val world = playerInv.player.world
 
@@ -34,6 +34,8 @@ class HumidifierContainer(
         for (i in 0..8) {
             addSlot(Slot(playerInv, i, 8 + i * 18, 142))
         }
+
+        addProperties(propertyDelegate)
     }
 
 
