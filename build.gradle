@@ -30,6 +30,10 @@ configurations {
 minecraft {
 }
 
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:19w12b"
     mappings "net.fabricmc:yarn:19w12b.3"
@@ -37,7 +41,6 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modCompile "net.fabricmc:fabric:0.2.5.114"
-    modCompile "io.github.cottonmc:cotton:0.0.6+19w11b-SNAPSHOT"
 //    modCompile "io.github.cottonmc:cotton-ecs:1.0.0+19w11b-SNAPSHOT" // TODO Add this later, won't need it right now
     modCompile "io.github.prospector.silk:SilkAPI:1.2.3-38"
     implementation "net.fabricmc:fabric-language-kotlin:1.3.21-SNAPSHOT"
