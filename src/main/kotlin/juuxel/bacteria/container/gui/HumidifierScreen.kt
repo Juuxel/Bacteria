@@ -1,5 +1,6 @@
 package juuxel.bacteria.container.gui
 
+import io.github.juuxel.polyester.container.screen.PolyesterScreen
 import juuxel.bacteria.block.entity.HumidifierEntity
 import juuxel.bacteria.container.HumidifierContainer
 import juuxel.bacteria.lib.Colors
@@ -8,10 +9,10 @@ import net.minecraft.entity.player.PlayerEntity
 import kotlin.math.ceil
 
 class HumidifierScreen(container: HumidifierContainer, player: PlayerEntity) :
-    BacteriaContainerScreen<HumidifierContainer>(
+    PolyesterScreen<HumidifierContainer>(
         container,
         player,
-        ModContainers.humidifier.path
+        ModContainers.humidifier
     ) {
 
     override fun drawForeground(int_1: Int, int_2: Int) {

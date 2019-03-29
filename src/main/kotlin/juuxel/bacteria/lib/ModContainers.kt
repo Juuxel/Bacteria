@@ -1,9 +1,8 @@
 package juuxel.bacteria.lib
 
+import io.github.juuxel.polyester.container.screen.PolyesterScreen
 import juuxel.bacteria.block.entity.HumidifierEntity
-import juuxel.bacteria.component.SimpleItemComponent
 import juuxel.bacteria.container.MicroscopeContainer
-import juuxel.bacteria.container.gui.BacteriaContainerScreen
 import juuxel.bacteria.container.gui.HumidifierScreen
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry
@@ -41,7 +40,7 @@ object ModContainers {
         }
 
         ScreenProviderRegistry.INSTANCE.registerFactory(microscope) { syncId, id, player, buf ->
-            BacteriaContainerScreen(MicroscopeContainer(syncId, player.inventory), player, microscope.path)
+            PolyesterScreen(MicroscopeContainer(syncId, player.inventory), player, microscope)
         }
     }
 }

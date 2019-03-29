@@ -1,5 +1,7 @@
 package juuxel.bacteria.block.entity
 
+import io.github.juuxel.polyester.container.property.CompoundPropertyDelegate
+import io.github.juuxel.polyester.container.property.SimplePropertyDelegate
 import io.github.prospector.silk.fluid.DropletValues
 import io.github.prospector.silk.util.ActionType
 import juuxel.bacteria.block.HumidifierBlock
@@ -8,8 +10,6 @@ import juuxel.bacteria.component.SimpleItemComponent
 import juuxel.bacteria.component.wrapper.SidedItemView
 import juuxel.bacteria.container.HumidifierContainer
 import juuxel.bacteria.lib.ModRecipes
-import juuxel.bacteria.util.CompoundPropertyDelegate
-import juuxel.bacteria.util.SimplePropertyDelegate
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.container.ContainerProvider
 import net.minecraft.entity.player.PlayerEntity

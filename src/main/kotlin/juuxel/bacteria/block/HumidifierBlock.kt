@@ -1,5 +1,6 @@
 package juuxel.bacteria.block
 
+import io.github.juuxel.polyester.block.PolyesterBlockWithEntity
 import juuxel.bacteria.Bacteria
 import juuxel.bacteria.block.entity.HumidifierEntity
 import juuxel.bacteria.lib.ModContainers
@@ -18,7 +19,7 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.IWorld
 import net.minecraft.world.World
 
-class HumidifierBlock : BBlockWithEntity(FabricBlockSettings.copy(Blocks.BLAST_FURNACE).lightLevel(0).build()), InventoryProvider {
+class HumidifierBlock : PolyesterBlockWithEntity(FabricBlockSettings.copy(Blocks.BLAST_FURNACE).lightLevel(0).build()), InventoryProvider {
     override val name = "humidifier"
     override val itemSettings = Item.Settings().itemGroup(Bacteria.itemGroup)
     override val blockEntityType = Companion.blockEntityType

@@ -1,5 +1,6 @@
 package juuxel.bacteria.block
 
+import io.github.juuxel.polyester.block.PolyesterBlockWithEntity
 import juuxel.bacteria.BacteriumData
 import juuxel.bacteria.block.entity.BacteriumComposterEntity
 import juuxel.bacteria.item.BacteriumBunchItem
@@ -21,7 +22,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import java.util.*
 
-class BacteriumComposterBlock : BBlockWithEntity(FabricBlockSettings.copy(Blocks.COMPOSTER).ticksRandomly().build()) {
+class BacteriumComposterBlock : PolyesterBlockWithEntity(FabricBlockSettings.copy(Blocks.COMPOSTER).ticksRandomly().build()) {
     override val name = "bacterium_composter"
     override val itemSettings: Nothing? = null
     override val blockEntityType = Companion.blockEntityType

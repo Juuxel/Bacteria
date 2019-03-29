@@ -1,5 +1,6 @@
 package juuxel.bacteria.block
 
+import io.github.juuxel.polyester.block.PolyesterBlockWithEntity
 import juuxel.bacteria.block.entity.ColonyEntity
 import juuxel.bacteria.lib.ModTags
 import net.fabricmc.fabric.api.block.FabricBlockSettings
@@ -17,7 +18,7 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-class ColonyBlock : BBlockWithEntity(FabricBlockSettings.copy(Blocks.SPONGE).dropsNothing().build()) {
+class ColonyBlock : PolyesterBlockWithEntity(FabricBlockSettings.copy(Blocks.SPONGE).dropsNothing().build()) {
     override val name = "colony"
     override val itemSettings = null
     override val blockEntityType = Companion.blockEntityType
